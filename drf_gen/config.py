@@ -5,15 +5,16 @@ VIEW_IMPORT = """
 from rest_auth.serializers import PasswordResetSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.filters import DjangoFilterBackend
+#from rest_framework.filters import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, viewsets, status, parsers, renderers
 from django.contrib.auth.models import User
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import models
-import serializers
+from . import models
+from . import serializers
 
 
 """
@@ -116,7 +117,7 @@ URLS_HEAD = """
 # coding: utf-8
 from django.conf.urls import url, include
 from rest_framework import routers
-import views
+from . import views
 
 
 router = routers.DefaultRouter()
@@ -134,7 +135,7 @@ urlpatterns = [
 SERIALIZERS_HEAD = """
 # coding: utf-8
 from rest_framework import serializers
-import models
+from . import models
 from django.contrib.auth.models import User
 
 
@@ -155,6 +156,6 @@ class UserSerializer(serializers.ModelSerializer):
 ADMIN_HEAD = """
 # coding: utf-8
 from django.contrib import admin
-import models
+from . import models
 
 """

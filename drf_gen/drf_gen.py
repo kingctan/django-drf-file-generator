@@ -4,10 +4,10 @@
 # Autor: Alexandre Proença - linuxloco@gmail.com - alexandre.proenca@hotmail.com.br
 # Floripa Dom 18:11 10/05/2015
 # !/usr/bin/python
-from ConfigParser import RawConfigParser
+from configparser import ConfigParser
 from argparse import ArgumentParser
 from pkg_resources import resource_stream
-import config
+from . import config
 import sys
 import os
 import shutil
@@ -27,10 +27,13 @@ def main():
     :param argv:
     :return: None
     """
-    config = RawConfigParser()
-    config.readfp(resource_stream('drf_gen', 'config.ini'))
-
-    outputdir = config.get('outputdir', 'dir')
+    config2 = ConfigParser()
+    stream = resource_stream('drf_gen','config.ini')
+    cg = stream.read().decode()
+    #config2.read(resource_stream('drf_gen', 'config.ini'),encoding="utf-8-sig")
+    #config2.readfp(cg)
+    #print(config2.sections())
+    outputdir = 'drf_gen_build'   #config2.get('outputdir', 'dir')
     os.mkdir(outputdir) if not os.path.exists(outputdir) else outputdir
 
     ap = ArgumentParser()
@@ -147,7 +150,7 @@ def extractor_obj(path):
                     or "models.U" in line \
                     or "models.O" in line:
 
-                if OBJ_ARR > 0:
+                if len(OBJ_ARR) > 0:
                     OBJ_ARR[-1].fields.append(line.split()[0])
     return True
 
